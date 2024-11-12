@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+    app:
+        build: ..
+        container_name: laravel-app
+        ports:
+            - 8080:80
+        volumes:
+            - ./OnFly:/var/www/html
+
+    db:
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: laravel
+            volumes:
+                dbdata:/var/lib/mysql
+            networks:
+                laravel
+        ports:
+            - 3306:3306
+
+    phpmyadmin:
+        image: phpmyadmin:latest
+        ports:
+            - 9001:80
+        environment:
+            - PMA_ARBITRARY=1
